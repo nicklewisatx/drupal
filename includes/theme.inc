@@ -780,7 +780,15 @@ function theme() {
       }
       $args = $new_args;
     }
-
+    // Set all default arguments.
+    if (!empty($info['arguments'])) {
+      $count = 0;
+      foreach ($info['arguments'] as $name => $default) {
+        $variables[$name] = isset($args[$count]) ? $args[$count] : $default;
+        $count++;
+      }
+    }
+    $callback_suggestions = array();
     // Invoke the variable processors, if any.
     // We minimize the overhead for theming hooks that have no processors and
     // are called many times per page request by caching '_no_processors'. If
@@ -791,13 +799,6 @@ function theme() {
         $variables = array(
           'theme_functions' => array(),
         );
-        if (!empty($info['arguments'])) {
-          $count = 0;
-          foreach ($info['arguments'] as $name => $default) {
-            $variables[$name] = isset($args[$count]) ? $args[$count] : $default;
-            $count++;
-          }
-        }
         // We don't want a poorly behaved process function changing $hook.
         $hook_clone = $hook;
         foreach (array('preprocess functions', 'process functions') as $phase) {
@@ -809,40 +810,33 @@ function theme() {
             }
           }
         }
-        if (!empty($info['arguments'])) {
-          $count = 0;
-          foreach ($info['arguments'] as $name => $default) {
-            $args[$count] = $variables[$name];
-            $count++;
-          }
-        }
-
         // Get suggestions for alternate functions out of the variables that
         // were set. This lets us dynamically choose a function from a list.
         // The order is FILO, so this array is ordered from least appropriate
         // functions to most appropriate last.
-        $suggestions = array();
         if (isset($variables['theme_functions'])) {
-          $suggestions = $variables['theme_functions'];
+          $callback_suggestions = $variables['theme_functions'];
         }
         if (isset($variables['theme_function'])) {
-          $suggestions[] = $variables['theme_function'];
+          $callback_suggestions[] = $variables['theme_function'];
         }
-        foreach (array_reverse($suggestions) as $suggestion) {
-          if (function_exists($suggestion)) {
-            $info['function'] = $suggestion;
-            break;
-          }
-        }
+        $callback_suggestions = array_reverse($callback_suggestions);
       }
       else {
         $hooks[$hook]['_no_processors'] = TRUE;
       }
     }
-
+    $callback_suggestions[] = $info['function'];
+    $callback = FALSE;
+    foreach ($callback_suggestions as $suggestion) {
+      if (function_exists($suggestion)) {
+        $callback = $suggestion;
+        break;
+      }
+    }
     // Call the function.
-    if (function_exists($info['function'])) {
-      $output = call_user_func_array($info['function'], $args);
+    if ($callback) {
+      $output = $callback($variables);
     }
   }
   else {
