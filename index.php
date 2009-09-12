@@ -41,3 +41,4 @@ elseif (isset($return)) {
 }
 
 drupal_page_footer();
+
