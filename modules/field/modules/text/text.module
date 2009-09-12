@@ -296,21 +296,30 @@ function text_field_formatter_info() {
 /**
  * Theme function for 'default' text field formatter.
  */
-function theme_field_formatter_text_default($element) {
+function theme_field_formatter_text_default($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return $element['#item']['safe'];
 }
 
 /**
  * Theme function for 'plain' text field formatter.
  */
-function theme_field_formatter_text_plain($element) {
+function theme_field_formatter_text_plain($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return strip_tags($element['#item']['safe']);
 }
 
 /**
  * Theme function for 'trimmed' text field formatter.
  */
-function theme_field_formatter_text_trimmed($element) {
+function theme_field_formatter_text_trimmed($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $field = field_info_field($element['#field_name']);
   $instance = field_info_instance($element['#field_name'], $element['#bundle']);
   return text_summary($element['#item']['safe'], $instance['settings']['text_processing'] ? $element['#item']['format'] : NULL);
@@ -322,7 +331,10 @@ function theme_field_formatter_text_trimmed($element) {
  * element of the field or, if the summary is empty, the trimmed
  * version of the full element of the field.
  */
-function theme_field_formatter_text_summary_or_trimmed($element) {
+function theme_field_formatter_text_summary_or_trimmed($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $field = field_info_field($element['#field_name']);
   $instance = field_info_instance($element['#field_name'], $element['#bundle']);
 
@@ -777,10 +789,16 @@ function text_field_widget_formatted_text_value($form, $edit = FALSE) {
  * $element['#field_name'] contains the field name
  * $element['#delta] is the position of this element in the group
  */
-function theme_text_textfield($element) {
+function theme_text_textfield($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return $element['#children'];
 }
 
-function theme_text_textarea($element) {
+function theme_text_textarea($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return $element['#children'];
 }

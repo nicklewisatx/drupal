@@ -436,7 +436,10 @@ function upload_node_search_result($node) {
  *
  * @ingroup themeable
  */
-function theme_upload_attachments($elements) {
+function theme_upload_attachments($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $header = array(t('Attachment'), t('Size'));
   $rows = array();
   foreach ($elements['#files'] as $file) {
@@ -600,7 +603,10 @@ function _upload_form($node) {
  *
  * @ingroup themeable
  */
-function theme_upload_form_current($form) {
+function theme_upload_form_current($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $header = array('', t('Delete'), t('List'), t('Description'), t('Weight'), t('Size'));
   drupal_add_tabledrag('upload-attachments', 'order', 'sibling', 'upload-weight');
 
@@ -627,7 +633,10 @@ function theme_upload_form_current($form) {
  *
  * @ingroup themeable
  */
-function theme_upload_form_new($form) {
+function theme_upload_form_new($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   drupal_add_tabledrag('upload-attachments', 'order', 'sibling', 'upload-weight');
   $output = drupal_render_children($form);
   return $output;

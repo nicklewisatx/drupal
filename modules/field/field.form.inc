@@ -221,7 +221,10 @@ function field_multiple_value_form($field, $instance, $langcode, $items, &$form,
  * Combine multiple values into a table with drag-n-drop reordering.
  * TODO : convert to a template.
  */
-function theme_field_multiple_value_form($element) {
+function theme_field_multiple_value_form($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $output = '';
 
   if ($element['#multiple'] > 1 || $element['#multiple'] == FIELD_CARDINALITY_UNLIMITED) {

@@ -2137,7 +2137,10 @@ function template_preprocess_comment(&$variables) {
  *   The comment node.
  * @ingroup themeable
  */
-function theme_comment_post_forbidden($node) {
+function theme_comment_post_forbidden($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   global $user;
 
   if (!$user->uid) {
