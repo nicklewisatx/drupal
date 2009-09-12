@@ -2963,7 +2963,10 @@ function system_timezone($abbreviation = '', $offset = -1, $is_daylight_saving_t
  *
  * @ingroup themeable
  */
-function theme_system_powered_by($image_path) {
+function theme_system_powered_by($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $image = theme('image', $image_path, t('Powered by Drupal, an open source content management system'), t('Powered by Drupal, an open source content management system'));
   return l($image, 'http://drupal.org', array('html' => TRUE, 'absolute' => TRUE, 'external' => TRUE));
 }
@@ -2992,7 +2995,10 @@ function theme_system_compact_link() {
  *
  * @ingroup themeable
  */
-function theme_meta_generator_html($version = VERSION) {
+function theme_meta_generator_html($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   drupal_add_html_head('<meta name="Generator" content="Drupal ' . $version . ' (http://drupal.org)" />');
 }
 
@@ -3001,7 +3007,10 @@ function theme_meta_generator_html($version = VERSION) {
  *
  * @ingroup themeable
  */
-function theme_meta_generator_header($version = VERSION) {
+function theme_meta_generator_header($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   drupal_set_header('X-Generator', 'Drupal ' . $version . ' (http://drupal.org)');
 }
 
@@ -3154,7 +3163,10 @@ function system_run_cron_image_access() {
  * @see system_run_cron_image()
  * @ingroup themeable
  */
-function theme_system_run_cron_image($image_path) {
+function theme_system_run_cron_image($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return '<noscript><div id="system-cron-image">' . theme('image', $image_path, '', '', array(), FALSE) . '</div></noscript>';
 }
 

@@ -787,7 +787,10 @@ function hook_field_formatter_info_alter(&$info) {
  *   - #formatter: The name of the formatter being used.
  *   - #settings: The array of formatter settings.
  */
-function theme_field_formatter_FORMATTER_SINGLE($element) {
+function theme_field_formatter_FORMATTER_SINGLE($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   // This relies on a 'safe' element being prepared in hook_field_sanitize().
   return $element['#item']['safe'];
 }
@@ -809,7 +812,10 @@ function theme_field_formatter_FORMATTER_SINGLE($element) {
  *   - #settings: The array of formatter settings.
  *   - numeric indexes: the field values being displayed.
  */
-function theme_field_formatter_FORMATTER_MULTIPLE($element) {
+function theme_field_formatter_FORMATTER_MULTIPLE($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $items = array();
   foreach (element_children($element) as $key) {
     $items[$key] = $key .':'. $element[$key]['#item']['value'];
