@@ -235,7 +235,10 @@ function aggregator_categorize_items_submit($form, &$form_state) {
  *   The output HTML.
  * @ingroup themeable
  */
-function theme_aggregator_categorize_items($form) {
+function theme_aggregator_categorize_items($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $output = drupal_render($form['feed_source']);
   $rows = array();
   if (!empty($form['items'])) {
@@ -368,7 +371,10 @@ function aggregator_page_rss() {
  *   A common category, if any, for all the feeds.
  * @ingroup themeable
  */
-function theme_aggregator_page_rss($feeds, $category = NULL) {
+function theme_aggregator_page_rss($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   drupal_set_header('Content-Type', 'application/rss+xml; charset=utf-8');
 
   $items = '';
@@ -428,7 +434,10 @@ function aggregator_page_opml($cid = NULL) {
  *   An array of the feeds to theme.
  * @ingroup themeable
  */
-function theme_aggregator_page_opml($feeds) {
+function theme_aggregator_page_opml($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   drupal_set_header('Content-Type', 'text/xml; charset=utf-8');
 
   $output  = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";

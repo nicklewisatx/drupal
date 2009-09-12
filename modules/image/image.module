@@ -802,7 +802,10 @@ function image_effect_apply($image, $effect) {
  *   A string containing the image tag.
  * @ingroup themeable
  */
-function theme_image_style($style_name, $path, $alt = '', $title = '', $attributes = array(), $getsize = TRUE) {
+function theme_image_style($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   // theme_image() can only honor the $getsize parameter with local file paths.
   // The derivative image is not created until it has been requested so the file
   // may not yet exist, in this case we just fallback to the URL.

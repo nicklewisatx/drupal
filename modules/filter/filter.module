@@ -772,7 +772,10 @@ function filter_dom_serialize($dom_document) {
  *
  * @ingroup themeable
  */
-function theme_filter_tips_more_info() {
+function theme_filter_tips_more_info($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return '<p>' . l(t('More information about text formats'), 'filter/tips') . '</p>';
 }
 
@@ -781,7 +784,10 @@ function theme_filter_tips_more_info() {
  *
  * @ingroup themeable
  */
-function theme_filter_guidelines($format) {
+function theme_filter_guidelines($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $name = isset($format->name) ? '<label>' . $format->name . ':</label>' : '';
   return '<div id="filter-guidelines-' . $format->format . '" class="filter-guidelines-item">' . $name . theme('filter_tips', _filter_tips($format->format, FALSE)) . '</div>';
 }

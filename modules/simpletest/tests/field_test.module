@@ -561,7 +561,10 @@ function field_test_theme() {
 /**
  * Theme function for 'field_test_default' formatter.
  */
-function theme_field_formatter_field_test_default($element) {
+function theme_field_formatter_field_test_default($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $value = $element['#item']['value'];
   $settings = $element['#settings'];
 
@@ -571,7 +574,10 @@ function theme_field_formatter_field_test_default($element) {
 /**
  * Theme function for 'field_test_multiple' formatter.
  */
-function theme_field_formatter_field_test_multiple($element) {
+function theme_field_formatter_field_test_multiple($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $settings = $element['#settings'];
 
   $items = array();

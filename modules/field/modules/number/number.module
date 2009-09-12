@@ -240,14 +240,20 @@ function number_field_formatter_info() {
 /**
  * Theme function for 'unformatted' number field formatter.
  */
-function theme_field_formatter_number_unformatted($element) {
+function theme_field_formatter_number_unformatted($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return $element['#item']['value'];
 }
 
 /**
  * Proxy theme function for number field formatters.
  */
-function theme_field_formatter_number($element) {
+function theme_field_formatter_number($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $field = field_info_field($element['#field_name']);
   $instance = field_info_instance($element['#field_name'], $element['#bundle']);
   $value = $element['#item']['value'];
@@ -497,6 +503,9 @@ function number_decimal_validate($element, &$form_state) {
  * $element['#field_name'] contains the field name
  * $element['#delta] is the position of this element in the group
  */
-function theme_number($element) {
+function theme_number($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return $element['#children'];
 }

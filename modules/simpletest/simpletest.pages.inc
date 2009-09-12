@@ -65,7 +65,10 @@ function simpletest_test_form() {
  * @param $table Form array that represent a table.
  * @return HTML output.
  */
-function theme_simpletest_test_table($table) {
+function theme_simpletest_test_table($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   drupal_add_css(drupal_get_path('module', 'simpletest') . '/simpletest.css');
   drupal_add_js(drupal_get_path('module', 'simpletest') . '/simpletest.js');
 
@@ -362,7 +365,10 @@ function simpletest_result_form_submit($form, &$form_state) {
  *
  * @return HTML output.
  */
-function theme_simpletest_result_summary($form) {
+function theme_simpletest_result_summary($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return '<div class="simpletest-' . ($form['#ok'] ? 'pass' : 'fail') . '">' . _simpletest_format_summary_line($form) . '</div>';
 }
 

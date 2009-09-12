@@ -71,7 +71,10 @@ function locale_languages_overview_form() {
  *
  * @ingroup themeable
  */
-function theme_locale_languages_overview_form($form) {
+function theme_locale_languages_overview_form($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $default = language_default();
   foreach ($form['name'] as $key => $element) {
     // Do not take form control structures.

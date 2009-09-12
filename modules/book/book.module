@@ -303,7 +303,10 @@ function book_block_save($delta = '', $edit = array()) {
  *
  * @ingroup themeable
  */
-function theme_book_title_link($link) {
+function theme_book_title_link($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $link['options']['attributes']['class'] = array('book-title');
 
   return l($link['title'], $link['href'], $link['options']);

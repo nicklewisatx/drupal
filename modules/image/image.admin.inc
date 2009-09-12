@@ -572,7 +572,10 @@ function image_rotate_form($data) {
  * @see image_get_styles()
  * @ingroup themeable
  */
-function theme_image_style_list($styles) {
+function theme_image_style_list($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $header = array(t('Style name'), array('data' => t('Operations'), 'colspan' => 3));
   $rows = array();
   foreach ($styles as $style) {
@@ -605,7 +608,10 @@ function theme_image_style_list($styles) {
  *   An associative array containing the structure of the effects group.
  * @ingroup themeable
  */
-function theme_image_style_effects($form) {
+function theme_image_style_effects($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $rows = array();
 
   foreach (element_children($form) as $key) {
@@ -658,7 +664,10 @@ function theme_image_style_effects($form) {
  *   The image style array being previewed.
  * @ingroup themeable
  */
-function theme_image_style_preview($style) {
+function theme_image_style_preview($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $sample_image = variable_get('image_style_preview_image', drupal_get_path('module', 'image') . '/sample.png');
   $sample_width = 160;
   $sample_height = 160;
@@ -730,7 +739,10 @@ function theme_image_style_preview($style) {
  *   A Form API element containing radio buttons.
  * @ingroup themeable
  */
-function theme_image_anchor($element) {
+function theme_image_anchor($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $rows = array();
   $row = array();
   foreach (element_children($element) as $n => $key) {
@@ -753,7 +765,10 @@ function theme_image_anchor($element) {
  *   The current configuration for this resize effect.
  * @ingroup themeable
  */
-function theme_image_resize_summary($data) {
+function theme_image_resize_summary($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   if ($data['width'] && $data['height']) {
     return check_plain($data['width']) . 'x' . check_plain($data['height']);
   }
@@ -769,7 +784,10 @@ function theme_image_resize_summary($data) {
  *   The current configuration for this scale effect.
  * @ingroup themeable
  */
-function theme_image_scale_summary($data) {
+function theme_image_scale_summary($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return theme('image_resize_summary', $data) . ' ' . ($data['upscale'] ? '(' . t('upscaling allowed') . ')' : '');
 }
 
@@ -780,7 +798,10 @@ function theme_image_scale_summary($data) {
  *   The current configuration for this crop effect.
  * @ingroup themeable
  */
-function theme_image_crop_summary($data) {
+function theme_image_crop_summary($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return theme('image_resize_summary', $data);
 }
 
@@ -791,6 +812,9 @@ function theme_image_crop_summary($data) {
  *   The current configuration for this rotate effect.
  * @ingroup themeable
  */
-function theme_image_rotate_summary($data) {
+function theme_image_rotate_summary($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return ($data['random']) ? t('random between -@degrees&deg and @degrees&deg', array('@degrees' => str_replace('-', '', $data['degrees']))) : t('@degrees&deg', array('@degrees' => $data['degrees']));
 }

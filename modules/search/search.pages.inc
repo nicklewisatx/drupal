@@ -56,7 +56,10 @@ function search_view($type = 'node') {
  * @return
  *   A string containing the listing output.
  */
-function theme_search_results_listing($title, $content) {
+function theme_search_results_listing($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $output = '<h2 class="title">' . $title . '</h2><div>' . $content . '</div>';
   return $output;
 }

@@ -199,7 +199,10 @@ function color_scheme_form(&$form_state, $theme) {
  *
  * @ingroup themeable
  */
-function theme_color_scheme_form($form) {
+function theme_color_scheme_form($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $theme = $form['theme']['#value'];
   $info = $form['info']['#value'];
   $path = drupal_get_path('theme', $theme) . '/';

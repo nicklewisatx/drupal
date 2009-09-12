@@ -1954,7 +1954,10 @@ function system_batch_page() {
  *   include a 'title', a 'description' and a formatted 'content'.
  * @ingroup themeable
  */
-function theme_admin_block($block) {
+function theme_admin_block($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   // Don't display the block if it has no content to display.
   if (empty($block['show'])) {
     return '';
@@ -1995,7 +1998,10 @@ EOT;
  *   include a 'title', a 'description' and a formatted 'content'.
  * @ingroup themeable
  */
-function theme_admin_block_content($content) {
+function theme_admin_block_content($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   if (!$content) {
     return '';
   }
@@ -2028,7 +2034,10 @@ function theme_admin_block_content($content) {
  *   in. This is usually 'left' or 'right'.
  * @ingroup themeable
  */
-function theme_admin_page($blocks) {
+function theme_admin_page($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $stripe = 0;
   $container = array();
 
@@ -2064,7 +2073,10 @@ function theme_admin_page($blocks) {
  *   An array of modules to be displayed.
  * @ingroup themeable
  */
-function theme_system_admin_by_module($menu_items) {
+function theme_system_admin_by_module($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $stripe = 0;
   $output = '';
   $container = array('left' => '', 'right' => '');
@@ -2112,7 +2124,10 @@ function theme_system_admin_by_module($menu_items) {
  *   An array of requirements.
  * @ingroup themeable
  */
-function theme_status_report($requirements) {
+function theme_status_report($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $i = 0;
   $output = '<table class="system-status-report">';
   foreach ($requirements as $requirement) {
@@ -2149,7 +2164,10 @@ function theme_status_report($requirements) {
  *   An associative array containing the structure of the form.
  * @ingroup themeable
  */
-function theme_system_modules_fieldset($form) {
+function theme_system_modules_fieldset($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   // Individual table headers.
   $rows = array();
   // Iterate through all the modules, which are
@@ -2196,7 +2214,10 @@ function theme_system_modules_fieldset($form) {
  * @return
  *   An HTML string for the message.
  */
-function theme_system_modules_incompatible($message) {
+function theme_system_modules_incompatible($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return '<div class="incompatible">' . $message . '</div>';
 }
 
@@ -2209,7 +2230,10 @@ function theme_system_modules_incompatible($message) {
  * @return
  *   An HTML string representing the table.
  */
-function theme_system_modules_uninstall($form) {
+function theme_system_modules_uninstall($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   // No theming for the confirm form.
   if (isset($form['confirm'])) {
     return drupal_render($form);
@@ -2249,7 +2273,10 @@ function theme_system_modules_uninstall($form) {
  *   An associative array containing the structure of the form.
  * @ingroup themeable
  */
-function theme_system_themes_form($form) {
+function theme_system_themes_form($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   foreach (element_children($form) as $key) {
     // Only look for themes
     if (!isset($form[$key]['info'])) {

@@ -84,7 +84,10 @@ function common_test_theme() {
 /**
  * Theme function for testing drupal_render() theming.
  */
-function theme_common_test_foo($foo, $bar) {
+function theme_common_test_foo($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return $foo . $bar;
 }
 

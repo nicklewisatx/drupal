@@ -27,7 +27,10 @@ function menu_overview_page() {
 /**
  * Theme the menu title and description for admin page
  */
-function theme_menu_admin_overview($title, $name, $description) {
+function theme_menu_admin_overview($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $output = check_plain($title);
   $output .= '<div class="description">' . filter_xss_admin($description) . '</div>';
 
@@ -186,7 +189,10 @@ function menu_overview_form_submit($form, &$form_state) {
  *
  * @ingroup themeable
  */
-function theme_menu_overview_form($form) {
+function theme_menu_overview_form($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   drupal_add_tabledrag('menu-overview', 'match', 'parent', 'menu-plid', 'menu-plid', 'menu-mlid', TRUE, MENU_MAX_DEPTH - 1);
   drupal_add_tabledrag('menu-overview', 'order', 'sibling', 'menu-weight');
 

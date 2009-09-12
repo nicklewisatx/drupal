@@ -85,7 +85,10 @@ function _theme_load_offline_registry($theme, $base_theme = NULL, $theme_engine 
  *
  * @ingroup themeable
  */
-function theme_task_list($items, $active = NULL) {
+function theme_task_list($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $done = isset($items[$active]) || $active == NULL;
   $output = '<h2 class="element-invisible">Installation tasks</h2>';
   $output .= '<ol class="task-list">';
@@ -118,7 +121,10 @@ function theme_task_list($items, $active = NULL) {
  * @param $content
  *   The page content to show.
  */
-function theme_install_page($content) {
+function theme_install_page($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   drupal_set_header('Content-Type', 'text/html; charset=utf-8');
 
   // Assign content.
@@ -174,7 +180,10 @@ function theme_install_page($content) {
  *   Whether to output status and error messages.
  *   FALSE can be useful to postpone the messages to a subsequent page.
  */
-function theme_update_page($content, $show_messages = TRUE) {
+function theme_update_page($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   // Set required headers.
   drupal_set_header('Content-Type', 'text/html; charset=utf-8');
 

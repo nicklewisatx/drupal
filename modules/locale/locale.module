@@ -673,7 +673,10 @@ function locale_block_view($delta = '') {
  *
  * @ingroup themeable
  */
-function theme_locale_translation_filters($form) {
+function theme_locale_translation_filters($variables) {
+  extract($variables, EXT_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $output = '';
   foreach (element_children($form['status']) as $key) {
     $output .= drupal_render($form['status'][$key]);
