@@ -1,5 +1,5 @@
 <?php
-// $Id: filter.module,v 1.287 2009-08-30 06:04:09 dries Exp $
+// $Id: filter.module,v 1.289 2009-09-12 06:09:45 dries Exp $
 
 /**
  * @file
@@ -70,6 +70,13 @@ function filter_theme() {
  * Implement hook_menu().
  */
 function filter_menu() {
+  $items['filter/tips'] = array(
+    'title' => 'Compose tips',
+    'page callback' => 'filter_tips_long',
+    'access callback' => TRUE,
+    'type' => MENU_SUGGESTED_ITEM,
+    'file' => 'filter.pages.inc',
+  );
   $items['admin/config/content/formats'] = array(
     'title' => 'Text formats',
     'description' => 'Configure how content input by users is filtered, including allowed HTML tags. Also allows enabling of module-provided filters.',
@@ -89,13 +96,6 @@ function filter_menu() {
     'type' => MENU_LOCAL_ACTION,
     'weight' => 1,
     'file' => 'filter.admin.inc',
-  );
-  $items['filter/tips'] = array(
-    'title' => 'Compose tips',
-    'page callback' => 'filter_tips_long',
-    'access callback' => TRUE,
-    'type' => MENU_SUGGESTED_ITEM,
-    'file' => 'filter.pages.inc',
   );
   $items['admin/config/content/formats/%filter_format'] = array(
     'type' => MENU_CALLBACK,
@@ -185,15 +185,14 @@ function filter_format_save($format) {
   // to the bottom.
   $current = filter_list_format($format->format);
   $filters = $format->filters;
-
-  foreach ($filters as $name => $status) {
+  foreach ($filters as $name => $filter) {
     $fields = array();
     // Add new filters to the bottom.
     $fields['weight'] = isset($current[$name]->weight) ? $current[$name]->weight : 10;
-    $fields['status'] = $status;
+    $fields['status'] = $filter['status'];
     // Only update settings if there are any.
-    if (!empty($format->settings[$name])) {
-      $fields['settings'] = serialize($format->settings[$name]);
+    if (!empty($filter['settings'])) {
+      $fields['settings'] = serialize($filter['settings']);
     }
     db_merge('filter')
       ->key(array(
@@ -211,6 +210,8 @@ function filter_format_save($format) {
     module_invoke_all('filter_format_update', $format);
   }
 
+  // Clear the filter cache whenever a text format is saved.
+  drupal_static_reset('filter_list_format');
   cache_clear_all($format->format . ':', 'cache_filter', TRUE);
 
   return $return;
@@ -386,19 +387,34 @@ function _filter_html_escape_tips($filter, $format, $long = FALSE) {
 /**
  * @} End of "Tips callback for filters".
  */
+
 /**
  * Retrieve a list of text formats.
+ *
+ * @param $format
+ *   (optional) The text format to retrieve; if omitted or NULL, retrieve an
+ *   array of accessible text formats.
+ * @param $account
+ *   (optional) The user account to retrieve accessible text formats for; if
+ *   omitted, the currently logged-in user is used.
+ *
+ * @return
+ *   Either one text format object or a list of text format objects, depending
+ *   on the $format parameter. FALSE if the user does not have access to the
+ *   given text $format.
  */
-function filter_formats($index = NULL) {
+function filter_formats($format = NULL, $account = NULL) {
   global $user;
-  static $formats;
+  $formats = &drupal_static(__FUNCTION__, array());
+
+  if (!isset($account)) {
+    $account = $user;
+  }
 
   // Administrators can always use all text formats.
-  $all = user_access('administer filters');
+  $all = user_access('administer filters', $account);
 
-  if (!isset($formats)) {
-    $formats = array();
-
+  if (!isset($formats[$account->uid])) {
     $query = db_select('filter_format', 'f');
     $query->addField('f', 'format', 'format');
     $query->addField('f', 'name', 'name');
@@ -416,12 +432,12 @@ function filter_formats($index = NULL) {
       $query->condition($or);
     }
 
-    $formats = $query->execute()->fetchAllAssoc('format');
+    $formats[$account->uid] = $query->execute()->fetchAllAssoc('format');
   }
-  if (isset($index)) {
-    return isset($formats[$index]) ? $formats[$index] : FALSE;
+  if (isset($format)) {
+    return isset($formats[$account->uid][$format]) ? $formats[$account->uid][$format] : FALSE;
   }
-  return $formats;
+  return $formats[$account->uid];
 }
 
 /**
@@ -472,47 +488,52 @@ function filter_format_allowcache($format) {
 }
 
 /**
- * Retrieve a list of filters for a certain format.
+ * Retrieve a list of filters for a given text format.
  *
  * @param $format
  *   The format ID.
+ * @param $include_disabled
+ *   (optional) Boolean whether to retrieve all filters associated with the
+ *   given format, including those that are disabled. Defaults to FALSE.
  * @return
  *   An array of filter objects assosiated to the given format.
  */
-function filter_list_format($format) {
-  static $filters = array();
+function filter_list_format($format, $include_disabled = FALSE) {
+  $filters = &drupal_static(__FUNCTION__, array());
   $filter_info = filter_get_filters();
 
-  if (!isset($filters[$format])) {
-    $filters[$format] = array();
-    $result = db_select('filter', 'filter')
+  if (!isset($filters[$format]) || $include_disabled) {
+    $format_filters = array();
+    $query = db_select('filter', 'filter')
       ->fields('filter')
       ->condition('format', $format)
-      ->condition('status', 1)
       ->orderBy('weight')
       ->orderBy('module')
-      ->orderBy('name')
-      ->execute();
-    foreach ($result as $filter) {
-      if (isset($filter_info[$filter->name])) {
-        $filter->title = $filter_info[$filter->name]['title'];
+      ->orderBy('name');
+    if (!$include_disabled) {
+      $query->condition('status', 1);
+    }
+    $result = $query->execute()->fetchAllAssoc('name');
+    foreach ($result as $name => $filter) {
+      if (isset($filter_info[$name])) {
+        $filter->title = $filter_info[$name]['title'];
         // Unpack stored filter settings.
-        if (isset($filter->settings)) {
-          $filter->settings = unserialize($filter->settings);
-        }
-        else {
-          $filter->settings = array();
-        }
+        $filter->settings = (isset($filter->settings) ? unserialize($filter->settings) : array());
         // Apply default filter settings.
-        if (isset($filter_info[$filter->name]['default settings'])) {
-          $filter->settings = array_merge($filter_info[$filter->name]['default settings'], $filter->settings);
+        if (isset($filter_info[$name]['default settings'])) {
+          $filter->settings = array_merge($filter_info[$name]['default settings'], $filter->settings);
         }
-        $filters[$format][$filter->name] = $filter;
+        $format_filters[$name] = $filter;
       }
     }
+    // Prevent statically caching of disabled filters.
+    if ($include_disabled) {
+      return $format_filters;
+    }
+    $filters[$format] = $format_filters;
   }
 
-  return $filters[$format];
+  return isset($filters[$format]) ? $filters[$format] : array();
 }
 
 /**
@@ -644,16 +665,27 @@ function filter_form($selected_format = FILTER_FORMAT_DEFAULT, $weight = NULL, $
 }
 
 /**
- * Returns TRUE if the user is allowed to access this format.
+ * Returns whether a user is allowed to access a given text format.
+ *
+ * @param $format
+ *   The format of a text to be filtered. Specify FILTER_FORMAT_DEFAULT for
+ *   the site's default text format.
+ * @param $account
+ *   (optional) The user account to check access for; if omitted, the currently
+ *   logged-in user is used.
+ *
+ * @return
+ *   Boolean TRUE if the user is allowed to access the given format.
+ *
+ * @see filter_formats()
  */
-function filter_access($format) {
+function filter_access($format, $account = NULL) {
   $format = filter_resolve_format($format);
-  if (user_access('administer filters') || ($format == variable_get('filter_default_format', 1))) {
+  if (user_access('administer filters', $account) || ($format == variable_get('filter_default_format', 1))) {
     return TRUE;
   }
   else {
-    $formats = filter_formats();
-    return isset($formats[$format]);
+    return (bool) filter_formats($format, $account);
   }
 }
 

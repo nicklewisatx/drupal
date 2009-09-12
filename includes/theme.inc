@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.inc,v 1.521 2009-09-11 06:48:02 dries Exp $
+// $Id: theme.inc,v 1.523 2009-09-11 15:17:00 dries Exp $
 
 /**
  * @file
@@ -1503,7 +1503,12 @@ function theme_image($path, $alt = '', $title = '', $attributes = array(), $gets
  */
 function theme_breadcrumb($breadcrumb) {
   if (!empty($breadcrumb)) {
-    return '<div class="breadcrumb">' . implode(' » ', $breadcrumb) . '</div>';
+    // Provide a navigational heading to give context for breadcrumb links to
+    // screen-reader users. Make the heading invisible with .element-invisible.
+    $output = '<h2 class="element-invisible">' . t('You are here') . '</h2>';
+
+    $output .= '<div class="breadcrumb">' . implode(' » ', $breadcrumb) . '</div>';
+    return $output;
   }
 }
 
@@ -1829,10 +1834,11 @@ function theme_more_help_link($url) {
  *   The url of the feed.
  * @param $title
  *   A descriptive title of the feed.
-  */
+ */
 function theme_feed_icon($url, $title) {
-  if ($image = theme('image', 'misc/feed.png', t('Subscribe to %feed-title', array('%feed-title' => $title)))) {
-    return '<a href="' . check_url($url) . '" class="feed-icon">' . $image . '</a>';
+  $text = t('Subscribe to @feed-title', array('@feed-title' => $title));
+  if ($image = theme('image', 'misc/feed.png', $text)) {
+    return '<a href="' . check_url($url) . '" title="' . $text . '" class="feed-icon">' . $image . '</a>';
   }
 }
 
