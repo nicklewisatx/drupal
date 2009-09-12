@@ -788,6 +788,10 @@ function theme() {
         $count++;
       }
     }
+    // Pass through a single array parameter.
+    if (count($args) == 1 && is_array($args[0])) {
+      $variables = $args[0];
+    }
     $callback_suggestions = array();
     // Invoke the variable processors, if any.
     // We minimize the overhead for theming hooks that have no processors and
