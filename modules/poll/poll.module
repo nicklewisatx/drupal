@@ -747,10 +747,7 @@ function poll_view_results($node, $build_mode, $block = FALSE) {
  *
  * @ingroup themeable
  */
-function theme_poll_choices($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_poll_choices($form) {
   drupal_add_tabledrag('poll-choice-table', 'order', 'sibling', 'poll-weight');
 
   $delta = 0;

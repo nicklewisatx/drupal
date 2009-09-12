@@ -678,10 +678,7 @@ function user_admin_permissions_submit($form, &$form_state) {
  *
  * @ingroup themeable
  */
-function theme_user_admin_permissions($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_user_admin_permissions($form) {
   $roles = user_roles();
   foreach (element_children($form['permission']) as $key) {
     $row = array();
@@ -807,10 +804,7 @@ function user_admin_role_submit($form, &$form_state) {
  *
  * @ingroup themeable
  */
-function theme_user_admin_account($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_user_admin_account($form) {
   // Overview table:
   $header = array(
     theme('table_select_header_cell'),
@@ -855,10 +849,7 @@ function theme_user_admin_account($variables) {
  *
  * @ingroup themeable
  */
-function theme_user_admin_new_role($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_user_admin_new_role($form) {
   $header = array(t('Name'), array('data' => t('Operations'), 'colspan' => 2));
   foreach (user_roles() as $rid => $name) {
     $edit_permissions = l(t('edit permissions'), 'admin/config/people/permissions/' . $rid);
@@ -882,10 +873,7 @@ function theme_user_admin_new_role($variables) {
  *
  * @ingroup themeable
  */
-function theme_user_filter_form($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_user_filter_form($form) {
   $output = '<div id="user-admin-filter">';
   $output .= drupal_render($form['filters']);
   $output .= '</div>';
@@ -898,10 +886,7 @@ function theme_user_filter_form($variables) {
  *
  * @ingroup themeable
  */
-function theme_user_filters($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_user_filters($form) {
   $output = '<ul class="clearfix">';
   if (!empty($form['current'])) {
     foreach (element_children($form['current']) as $key) {

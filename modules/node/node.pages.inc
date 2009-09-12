@@ -32,10 +32,7 @@ function node_add_page() {
  *
  * @ingroup themeable
  */
-function theme_node_add_list($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_add_list($content) {
   $output = '';
 
   if ($content) {
@@ -323,10 +320,7 @@ function node_form_build_preview($form, &$form_state) {
  *
  * @ingroup themeable
  */
-function theme_node_form($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_form($form) {
   $output = "\n<div class=\"node-form\">\n";
 
   $output .= "  <div class=\"standard\">\n";
@@ -385,10 +379,7 @@ function node_preview($node) {
  *
  * @ingroup themeable
  */
-function theme_node_preview($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_preview($node) {
   $output = '<div class="preview">';
 
   $preview_trimmed_version = FALSE;

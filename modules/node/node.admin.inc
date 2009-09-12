@@ -192,10 +192,7 @@ function node_filter_form() {
  *
  * @ingroup themeable
  */
-function theme_node_filter_form($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_filter_form($form) {
   $output = '';
   $output .= '<div id="node-admin-filter">';
   $output .= drupal_render($form['filters']);
@@ -209,10 +206,7 @@ function theme_node_filter_form($variables) {
  *
  * @ingroup themeable
  */
-function theme_node_filters($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_filters($form) {
   $output = '';
   $output .= '<ul class="clearfix">';
   if (!empty($form['current'])) {
@@ -520,10 +514,7 @@ function node_admin_nodes_submit($form, &$form_state) {
  *
  * @ingroup themeable
  */
-function theme_node_admin_nodes($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_admin_nodes($form) {
   $output = '';
   $output .= drupal_render($form['options']);
 

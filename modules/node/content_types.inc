@@ -47,10 +47,7 @@ function node_overview_types() {
   return $build;
 }
 
-function theme_node_admin_overview($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_admin_overview($name, $type) {
   $output = check_plain($name);
   $output .= ' <small> (Machine name: ' . check_plain($type->type) . ')</small>';
   $output .= '<div class="description">' . filter_xss_admin($type->description) . '</div>';

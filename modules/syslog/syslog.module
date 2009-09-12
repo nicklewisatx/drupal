@@ -93,10 +93,7 @@ function syslog_theme() {
  *
  * @ingroup themeable
  */
-function theme_syslog_format($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_syslog_format($entry) {
   global $base_url;
 
   $message  = $base_url;

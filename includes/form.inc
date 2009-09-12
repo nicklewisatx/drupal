@@ -1517,10 +1517,7 @@ function form_options_flatten($array, $reset = TRUE) {
  * $options to an associative array in which the keys are group labels, and the
  * values are associative arrays in the normal $options format.
  */
-function theme_select($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_select($element) {
   $select = '';
   $size = $element['#size'] ? ' size="' . $element['#size'] . '"' : '';
   _form_set_class($element, array('form-select'));
@@ -1634,10 +1631,7 @@ function form_get_options($element, $key) {
  *
  * @ingroup themeable
  */
-function theme_fieldset($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_fieldset($element) {
   if (!empty($element['#collapsible'])) {
 
     if (!isset($element['#attributes']['class'])) {
@@ -1666,10 +1660,7 @@ function theme_fieldset($variables) {
  *
  * @ingroup themeable
  */
-function theme_radio($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_radio($element) {
   _form_set_class($element, array('form-radio'));
   $output = '<input type="radio" ';
   $output .= 'id="' . $element['#id'] . '" ';
@@ -1696,10 +1687,7 @@ function theme_radio($variables) {
  *
  * @ingroup themeable
  */
-function theme_radios($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_radios($element) {
   $class = 'form-radios';
   if (!empty($element['#attributes']['class'])) {
     $class .= ' ' . implode(' ', $element['#attributes']['class']);
@@ -1774,10 +1762,7 @@ function password_confirm_validate($element, &$element_state) {
  *
  * @ingroup themeable
  */
-function theme_date($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_date($element) {
   return '<div class="container-inline">' . drupal_render_children($element) . '</div>';
 }
 
@@ -1985,10 +1970,7 @@ function form_process_text_format($element) {
  *
  * @ingroup themeable
  */
-function theme_text_format_wrapper($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_text_format_wrapper($element) {
   $output = '<div class="text-format-wrapper">' . "\n";
 
   $output .= $element['#children'] . "\n";
@@ -2014,10 +1996,7 @@ function theme_text_format_wrapper($variables) {
  *
  * @ingroup themeable
  */
-function theme_checkbox($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_checkbox($element) {
   _form_set_class($element, array('form-checkbox'));
   $checkbox = '<input ';
   $checkbox .= 'type="checkbox" ';
@@ -2045,10 +2024,7 @@ function theme_checkbox($variables) {
  *
  * @ingroup themeable
  */
-function theme_checkboxes($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_checkboxes($element) {
   $class = 'form-checkboxes';
   if (!empty($element['#attributes']['class'])) {
     $class .= ' ' . implode(' ', $element['#attributes']['class']);
@@ -2124,10 +2100,7 @@ function form_process_checkboxes($element) {
  * );
  * @ingroup themeable
  */
-function theme_tableselect($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_tableselect($element) {
   $rows = array();
   if (!empty($element['#options'])) {
     // Generate a table row for each selectable item in #options.
@@ -2366,10 +2339,7 @@ function form_process_vertical_tabs($element, &$form_state) {
  *
  * @ingroup themeable
  */
-function theme_vertical_tabs($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_vertical_tabs($element) {
   // Add required JavaScript and Stylesheet.
   drupal_add_library('system', 'vertical-tabs');
 
@@ -2387,10 +2357,7 @@ function theme_vertical_tabs($variables) {
  *
  * @ingroup themeable
  */
-function theme_submit($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_submit($element) {
   return theme('button', $element);
 }
 
@@ -2405,10 +2372,7 @@ function theme_submit($variables) {
  *
  * @ingroup themeable
  */
-function theme_button($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_button($element) {
   $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
 
   return '<input type="submit" ' . (empty($element['#name']) ? '' : 'name="' . $element['#name'] . '" ') . 'id="' . $element['#id'] . '" value="' . check_plain($element['#value']) . '" ' . drupal_attributes($element['#attributes']) . " />\n";
@@ -2424,10 +2388,7 @@ function theme_button($variables) {
  *   A themed HTML string representing the form element.
  * @ingroup themeable
  */
-function theme_image_button($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_image_button($element) {
   $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
 
   return '<input type="image" name="' . $element['#name'] . '" ' .
@@ -2450,10 +2411,7 @@ function theme_image_button($variables) {
  *
  * @ingroup themeable
  */
-function theme_hidden($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_hidden($element) {
   return '<input type="hidden" name="' . $element['#name'] . '" id="' . $element['#id'] . '" value="' . check_plain($element['#value']) . "\" " . drupal_attributes($element['#attributes']) . " />\n";
 }
 
@@ -2469,10 +2427,7 @@ function theme_hidden($variables) {
  *
  * @ingroup themeable
  */
-function theme_textfield($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_textfield($element) {
   $size = empty($element['#size']) ? '' : ' size="' . $element['#size'] . '"';
   $maxlength = empty($element['#maxlength']) ? '' : ' maxlength="' . $element['#maxlength'] . '"';
   $class = array('form-text');
@@ -2509,10 +2464,7 @@ function theme_textfield($variables) {
  *
  * @ingroup themeable
  */
-function theme_form($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_form($element) {
   // Anonymous div to satisfy XHTML compliance.
   $action = $element['#action'] ? 'action="' . check_url($element['#action']) . '" ' : '';
   return '<form ' . $action . ' accept-charset="UTF-8" method="' . $element['#method'] . '" id="' . $element['#id'] . '"' . drupal_attributes($element['#attributes']) . ">\n<div>" . $element['#children'] . "\n</div></form>\n";
@@ -2530,10 +2482,7 @@ function theme_form($variables) {
  *
  * @ingroup themeable
  */
-function theme_textarea($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_textarea($element) {
   $class = array('form-textarea');
 
   // Add resizable behavior
@@ -2558,10 +2507,7 @@ function theme_textarea($variables) {
  * @ingroup themeable
  */
 
-function theme_markup($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_markup($element) {
   return (!empty($element['#markup']) ? $element['#markup'] : '') . drupal_render_children($element);
 }
 
@@ -2577,10 +2523,7 @@ function theme_markup($variables) {
  *
  * @ingroup themeable
  */
-function theme_password($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_password($element) {
   $size = $element['#size'] ? ' size="' . $element['#size'] . '" ' : '';
   $maxlength = $element['#maxlength'] ? ' maxlength="' . $element['#maxlength'] . '" ' : '';
 
@@ -2617,10 +2560,7 @@ function form_process_weight($element) {
  * For assistance with handling the uploaded file correctly, see the API
  * provided by file.inc.
  */
-function theme_file($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_file($element) {
   _form_set_class($element, array('form-file'));
   return '<input type="file" name="' . $element['#name'] . '"' . ($element['#attributes'] ? ' ' . drupal_attributes($element['#attributes']) : '') . ' id="' . $element['#id'] . '" size="' . $element['#size'] . "\" />\n";
 }
@@ -2636,10 +2576,7 @@ function theme_file($variables) {
  *
  * @ingroup themeable
  */
-function theme_form_element($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_form_element($element) {
   // This is also used in the installer, pre-database setup.
   $t = get_t();
 

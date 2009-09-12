@@ -1455,10 +1455,7 @@ function _taxonomy_term_select($title, $value, $vocabulary_id, $description, $mu
  *
  * @ingroup themeable
  */
-function theme_taxonomy_term_select($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_taxonomy_term_select($element) {
   return theme('select', $element);
 }
 
@@ -1879,10 +1876,7 @@ function taxonomy_field_formatter_info() {
 /**
  * Theme function for 'link' term field formatter.
  */
-function theme_field_formatter_taxonomy_term_link($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_field_formatter_taxonomy_term_link($element) {
   $term = $element['#item']['taxonomy_term'];
   return l($term->name, taxonomy_term_path($term));
 }
@@ -1890,10 +1884,7 @@ function theme_field_formatter_taxonomy_term_link($variables) {
 /**
  * Theme function for 'plain' term field formatter.
  */
-function theme_field_formatter_taxonomy_term_plain($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_field_formatter_taxonomy_term_plain($element) {
   $term = $element['#item']['taxonomy_term'];
   return $term->name;
 }

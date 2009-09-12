@@ -385,10 +385,7 @@ function options_options($field, $instance) {
  *  Theme the label for the empty value for options that are not required.
  *  The default theme will display N/A for a radio list and blank for a select.
  */
-function theme_options_none($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_options_none($instance) {
   switch ($instance['widget']['type']) {
     case 'options_buttons':
     case 'node_reference_buttons':
@@ -414,23 +411,14 @@ function theme_options_none($variables) {
  * $element['#field_name'] contains the field name
  * $element['#delta] is the position of this element in the group
  */
-function theme_options_select($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_options_select($element) {
   return $element['#children'];
 }
 
-function theme_options_onoff($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_options_onoff($element) {
   return $element['#children'];
 }
 
-function theme_options_buttons($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_options_buttons($element) {
   return $element['#children'];
 }

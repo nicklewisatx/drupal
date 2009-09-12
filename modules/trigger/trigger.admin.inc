@@ -266,10 +266,7 @@ function trigger_assign_form_submit($form, $form_state) {
  *
  * @ingroup themeable
  */
-function theme_trigger_display($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_trigger_display($element) {
   $header = array();
   $rows = array();
   if (count($element['assigned']['#value'])) {

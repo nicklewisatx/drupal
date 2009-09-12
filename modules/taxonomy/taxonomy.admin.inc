@@ -62,10 +62,7 @@ function taxonomy_overview_vocabularies_submit($form, &$form_state) {
  * @ingroup themeable
  * @see taxonomy_overview_vocabularies()
  */
-function theme_taxonomy_overview_vocabularies($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_taxonomy_overview_vocabularies($form) {
   $rows = array();
 
   foreach (element_children($form) as $key) {
@@ -595,10 +592,7 @@ function taxonomy_overview_terms_submit($form, &$form_state) {
  * @ingroup themeable
  * @see taxonomy_overview_terms()
  */
-function theme_taxonomy_overview_terms($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_taxonomy_overview_terms($form) {
   $page_increment  = $form['#page_increment'];
   $page_entries    = $form['#page_entries'];
   $back_peddle     = $form['#back_peddle'];

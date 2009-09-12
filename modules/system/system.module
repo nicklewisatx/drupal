@@ -2963,10 +2963,7 @@ function system_timezone($abbreviation = '', $offset = -1, $is_daylight_saving_t
  *
  * @ingroup themeable
  */
-function theme_system_powered_by($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_system_powered_by($image_path) {
   $image = theme('image', $image_path, t('Powered by Drupal, an open source content management system'), t('Powered by Drupal, an open source content management system'));
   return l($image, 'http://drupal.org', array('html' => TRUE, 'absolute' => TRUE, 'external' => TRUE));
 }
@@ -2976,10 +2973,7 @@ function theme_system_powered_by($variables) {
  *
  * @ingroup themeable
  */
-function theme_system_compact_link($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_system_compact_link() {
   $output = '<div class="compact-link">';
   if (system_admin_compact_mode()) {
     $output .= l(t('Show descriptions'), 'admin/compact/off', array('attributes' => array('title' => t('Expand layout to include descriptions.')), 'query' => drupal_get_destination()));
@@ -2998,10 +2992,7 @@ function theme_system_compact_link($variables) {
  *
  * @ingroup themeable
  */
-function theme_meta_generator_html($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_meta_generator_html($version = VERSION) {
   drupal_add_html_head('<meta name="Generator" content="Drupal ' . $version . ' (http://drupal.org)" />');
 }
 
@@ -3010,10 +3001,7 @@ function theme_meta_generator_html($variables) {
  *
  * @ingroup themeable
  */
-function theme_meta_generator_header($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_meta_generator_header($version = VERSION) {
   drupal_set_header('X-Generator', 'Drupal ' . $version . ' (http://drupal.org)');
 }
 
@@ -3166,10 +3154,7 @@ function system_run_cron_image_access() {
  * @see system_run_cron_image()
  * @ingroup themeable
  */
-function theme_system_run_cron_image($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_system_run_cron_image($image_path) {
   return '<noscript><div id="system-cron-image">' . theme('image', $image_path, '', '', array(), FALSE) . '</div></noscript>';
 }
 

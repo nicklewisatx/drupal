@@ -1258,10 +1258,7 @@ function _menu_tree_data(&$links, $parents, $depth) {
  *
  * @ingroup themeable
  */
-function theme_menu_item_link($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_menu_item_link($link) {
   if (empty($link['localized_options'])) {
     $link['localized_options'] = array();
   }
@@ -1274,10 +1271,7 @@ function theme_menu_item_link($variables) {
  *
  * @ingroup themeable
  */
-function theme_menu_tree($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_menu_tree($tree) {
   return '<ul class="menu">' . $tree . '</ul>';
 }
 
@@ -1305,10 +1299,7 @@ function theme_menu_tree($variables) {
  *   Extra classes that should be added to the class of the list item.
  *   Defaults to NULL.
  */
-function theme_menu_item($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_menu_item($link, $has_children, $menu = '', $in_active_trail = FALSE, $extra_class = NULL) {
   $class = ($menu ? 'expanded' : ($has_children ? 'collapsed' : 'leaf'));
   if (!empty($extra_class)) {
     $class .= ' ' . $extra_class;
@@ -1324,10 +1315,7 @@ function theme_menu_item($variables) {
  *
  * @ingroup themeable
  */
-function theme_menu_local_task($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_menu_local_task($link, $active = FALSE) {
   return '<li ' . ($active ? 'class="active" ' : '') . '>' . $link . "</li>\n";
 }
 
@@ -1336,10 +1324,7 @@ function theme_menu_local_task($variables) {
  *
  * @ingroup themeable
  */
-function theme_menu_local_action($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_menu_local_action($link) {
   return '<li>' . $link . "</li>\n";
 }
 
@@ -1675,10 +1660,7 @@ function menu_tab_root_path() {
  *
  * @ingroup themeable
  */
-function theme_menu_local_tasks($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_menu_local_tasks() {
   $output = '';
 
   if ($primary = menu_primary_local_tasks()) {

@@ -96,10 +96,7 @@ function profile_admin_overview_submit($form, &$form_state) {
  * @ingroup themeable
  * @see profile_admin_overview()
  */
-function theme_profile_admin_overview($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_profile_admin_overview($form) {
   drupal_add_css(drupal_get_path('module', 'profile') . '/profile.css');
   // Add javascript if there's more than one field.
   if (isset($form['submit'])) {

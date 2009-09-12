@@ -25,10 +25,7 @@ function update_status() {
  *
  * @ingroup themeable
  */
-function theme_update_report($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_update_report($data) {
   $last = variable_get('update_last_check', 0);
   $output = '<div class="update checked">' . ($last ? t('Last checked: @time ago', array('@time' => format_interval(REQUEST_TIME - $last))) : t('Last checked: never'));
   $output .= ' <span class="check-manually">(' . l(t('Check manually'), 'admin/reports/updates/check') . ')</span>';
@@ -230,10 +227,7 @@ function theme_update_report($variables) {
  *
  * @ingroup themeable
  */
-function theme_update_version($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_update_version($version, $tag, $class) {
   $output = '';
   $output .= '<table class="version ' . $class . '">';
   $output .= '<tr>';

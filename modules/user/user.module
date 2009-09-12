@@ -1160,10 +1160,7 @@ function template_preprocess_user_picture(&$variables) {
  *
  * @ingroup themeable
  */
-function theme_user_list($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_user_list($users, $title = NULL) {
   if (!empty($users)) {
     foreach ($users as $user) {
       $items[] = theme('username', $user);
@@ -2696,10 +2693,7 @@ function user_comment_view($comment) {
  *
  * @ingroup themeable
  */
-function theme_user_signature($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_user_signature($signature) {
   $output = '';
   if ($signature) {
     $output .= '<div class="clear">';

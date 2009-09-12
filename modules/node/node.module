@@ -282,10 +282,7 @@ function node_title_list($result, $title = NULL) {
  *
  * @ingroup themeable
  */
-function theme_node_list($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_list($items, $title = NULL) {
   return theme('item_list', $items, $title);
 }
 
@@ -1210,10 +1207,7 @@ function template_preprocess_node(&$variables) {
  *
  * @ingroup themeable
  */
-function theme_node_log_message($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_log_message($log) {
   return '<div class="log"><div class="title">' . t('Log') . ':</div>' . $log . '</div>';
 }
 
@@ -1514,10 +1508,7 @@ function node_user_cancel($edit, $account, $method) {
  *
  * @ingroup themeable
  */
-function theme_node_search_admin($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_node_search_admin($form) {
   $output = drupal_render($form['info']);
 
   $header = array(t('Factor'), t('Weight'));

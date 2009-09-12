@@ -638,10 +638,7 @@ function aggregator_category_load($cid) {
  *   The item HTML.
  * @ingroup themeable
  */
-function theme_aggregator_block_item($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_aggregator_block_item($item, $feed = 0) {
 
   // Display the external link to the item.
   return '<a href="' . check_url($item->link) . '">' . check_plain($item->title) . "</a>\n";

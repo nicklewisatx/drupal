@@ -64,10 +64,7 @@ function filter_admin_overview_submit($form, &$form_state) {
  *
  * @ingroup themeable
  */
-function theme_filter_admin_overview($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_filter_admin_overview($form) {
   $rows = array();
   foreach (element_children($form) as $id) {
     $element = $form[$id];
@@ -362,10 +359,7 @@ function filter_admin_order(&$form_state, $format = NULL) {
  *
  * @ingroup themeable
  */
-function theme_filter_admin_order($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_filter_admin_order($form) {
   $header = array(t('Name'), t('Weight'));
   $rows = array();
   foreach (element_children($form['names']) as $id) {

@@ -48,10 +48,7 @@ function filter_tips_long() {
  * @see _filter_tips()
  * @ingroup themeable
  */
-function theme_filter_tips($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_filter_tips($tips, $long = FALSE) {
   $output = '';
 
   $multiple = count($tips) > 1;

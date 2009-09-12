@@ -745,10 +745,7 @@ function file_field_widget_process_multiple($element, &$form_state, $form) {
 /**
  * Theme an individual file upload widget.
  */
-function theme_file_widget($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_file_widget($element) {
   $output = '';
   // The "form-managed-file" class is required for proper AJAX functionality.
   $output .= '<div class="file-widget form-managed-file clearfix">';
@@ -765,10 +762,7 @@ function theme_file_widget($variables) {
 /**
  * Theme a group of file upload widgets.
  */
-function theme_file_widget_multiple($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_file_widget_multiple($element) {
   $field = field_info_field($element['#field_name']);
 
   // Get our list of widgets in order.
@@ -860,10 +854,7 @@ function theme_file_widget_multiple($variables) {
  * @return
  *   A string suitable for a file field description.
  */
-function theme_file_upload_help($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_file_upload_help($description, $upload_validators) {
   $descriptions = array();
 
   if (strlen($description)) {
@@ -898,30 +889,21 @@ function theme_file_upload_help($variables) {
 /**
  * Theme function for 'default' file field formatter.
  */
-function theme_field_formatter_file_default($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_field_formatter_file_default($element) {
   return theme('file_link', (object) $element['#item']);
 }
 
 /**
  * Theme function for 'url_plain' file field formatter.
  */
-function theme_field_formatter_file_url_plain($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_field_formatter_file_url_plain($element) {
   return empty($element['#item']['uri']) ? '' : file_create_url($element['#item']['uri']);
 }
 
 /**
  * Theme function for the 'table' formatter.
  */
-function theme_field_formatter_file_table($variables) {
-  extract($variables, EXT_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_field_formatter_file_table($element) {
   $header = array(t('Attachment'), t('Size'));
   $rows = array();
   foreach (element_children($element) as $key) {
