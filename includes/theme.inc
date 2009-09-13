@@ -768,7 +768,7 @@ function theme() {
   }
   if (isset($info['function'])) {
     // The theme call is a function.
-
+    $variables = array();
     // If a theme function that does not expect a renderable array is called
     // with a renderable array as the only argument (via drupal_render), then
     // we take the arguments from the properties of the renderable array. If
@@ -1329,7 +1329,7 @@ function theme_render_template($template_file, $variables) {
  */
 function theme_placeholder($variables) {
   // @todo - sanitize text in a preprocess function.
-  return '<em>' . check_plain($$variables['text']) . '</em>';
+  return '<em>' . check_plain($variables['text']) . '</em>';
 }
 
 /**
