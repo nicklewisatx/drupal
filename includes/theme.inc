@@ -768,7 +768,7 @@ function theme() {
   }
   if (isset($info['function'])) {
     // The theme call is a function.
-
+    $variables = array();
     // If a theme function that does not expect a renderable array is called
     // with a renderable array as the only argument (via drupal_render), then
     // we take the arguments from the properties of the renderable array. If
@@ -1327,8 +1327,9 @@ function theme_render_template($template_file, $variables) {
  * @return
  *   The formatted text (html).
  */
-function theme_placeholder($text) {
-  return '<em>' . check_plain($text) . '</em>';
+function theme_placeholder($variables) {
+  // @todo - sanitize text in a preprocess function.
+  return '<em>' . check_plain($variables['text']) . '</em>';
 }
 
 /**
@@ -1344,7 +1345,8 @@ function theme_placeholder($text) {
  * @return
  *   A string containing the messages.
  */
-function theme_status_messages($display = NULL) {
+function theme_status_messages($variables) {
+  $display = isset($variables['display']) ? $variables['display'] : NULL;
   $output = '';
   $status_heading = array(
     'status' => t('Status message'),
@@ -1401,7 +1403,10 @@ function theme_status_messages($display = NULL) {
  * @return
  *   A string containing an unordered list of links.
  */
-function theme_links($links, $attributes = array('class' => array('links')), $heading = array()) {
+function theme_links($variables) {
+  extract($variables, EXTR_SKIP);
+  // Extracts $links, $attributes, $heading.
+  // @todo remove extract() if possible and check hook_theme defaults.
   global $language;
   $output = '';
 
@@ -1490,7 +1495,10 @@ function theme_links($links, $attributes = array('class' => array('links')), $he
  * @return
  *   A string containing the image tag.
  */
-function theme_image($path, $alt = '', $title = '', $attributes = array(), $getsize = TRUE) {
+function theme_image($variables) {
+  extract($variables, EXTR_SKIP);
+  // $path, $alt = '', $title = '', $attributes = array(), $getsize = TRUE
+  // @todo remove extract() if possible and check hook_theme defaults.
   if (!$getsize || (is_file($path) && (list($width, $height, $type, $image_attributes) = @getimagesize($path)))) {
     $attributes = drupal_attributes($attributes);
     $url = file_create_url($path);
@@ -1601,7 +1609,10 @@ function theme_submenu($links) {
  * @return
  *   An HTML string representing the table.
  */
-function theme_table($header, $rows, $attributes = array(), $caption = NULL, $colgroups = array(), $sticky = TRUE) {
+function theme_table($variables) {
+  extract($variables, EXTR_SKIP);
+  // $header, $rows, $attributes = array(), $caption = NULL, $colgroups = array(), $sticky = TRUE
+  // @todo remove extract() if possible and check hook_theme defaults.
 
   // Add sticky headers, if applicable.
   if (count($header) && $sticky) {
@@ -1730,8 +1741,8 @@ function theme_table_select_header_cell() {
  * @return
  *   A themed sort icon.
  */
-function theme_tablesort_indicator($style) {
-  if ($style == "asc") {
+function theme_tablesort_indicator($variables) {
+  if ($variables['style'] == "asc") {
     return theme('image', 'misc/arrow-asc.png', t('sort icon'), t('sort ascending'));
   }
   else {
@@ -1749,7 +1760,8 @@ function theme_tablesort_indicator($style) {
  * @return
  *   A string containing the marker.
  */
-function theme_mark($type = MARK_NEW) {
+function theme_mark($variables) {
+  $type = $variables['type'];
   global $user;
   if ($user->uid) {
     if ($type == MARK_NEW) {
@@ -1779,7 +1791,10 @@ function theme_mark($type = MARK_NEW) {
  * @return
  *   A string containing the list output.
  */
-function theme_item_list($items = array(), $title = NULL, $type = 'ul', $attributes = array()) {
+function theme_item_list($variables) {
+  extract($variables, EXTR_SKIP);
+  // $items = array(), $title = NULL, $type = 'ul', $attributes = array()
+  // @todo remove extract() if possible and check hook_theme defaults.
   $output = '<div class="item-list">';
   if (isset($title)) {
     $output .= '<h3>' . $title . '</h3>';
@@ -1827,8 +1842,8 @@ function theme_item_list($items = array(), $title = NULL, $type = 'ul', $attribu
 /**
  * Returns code that emits the 'more help'-link.
  */
-function theme_more_help_link($url) {
-  return '<div class="more-help-link">' . t('<a href="@link">More help</a>', array('@link' => check_url($url))) . '</div>';
+function theme_more_help_link($variables) {
+  return '<div class="more-help-link">' . t('<a href="@link">More help</a>', array('@link' => check_url($variables['url']))) . '</div>';
 }
 
 /**
@@ -1839,10 +1854,10 @@ function theme_more_help_link($url) {
  * @param $title
  *   A descriptive title of the feed.
  */
-function theme_feed_icon($url, $title) {
-  $text = t('Subscribe to @feed-title', array('@feed-title' => $title));
+function theme_feed_icon($variables) {
+  $text = t('Subscribe to @feed-title', array('@feed-title' => $variables['title']));
   if ($image = theme('image', 'misc/feed.png', $text)) {
-    return '<a href="' . check_url($url) . '" title="' . $text . '" class="feed-icon">' . $image . '</a>';
+    return '<a href="' . check_url($variables['url']) . '" title="' . $text . '" class="feed-icon">' . $image . '</a>';
   }
 }
 
@@ -1854,8 +1869,8 @@ function theme_feed_icon($url, $title) {
  * @param $title
  *   A descriptive verb for the link, like 'Read more'
  */
-function theme_more_link($url, $title) {
-  return '<div class="more-link">' . t('<a href="@link" title="@title">more</a>', array('@link' => check_url($url), '@title' => $title)) . '</div>';
+function theme_more_link($variables) {
+  return '<div class="more-link">' . t('<a href="@link" title="@title">more</a>', array('@link' => check_url($variables['url']), '@title' => $variables['title'])) . '</div>';
 }
 
 /**
@@ -1945,7 +1960,8 @@ function template_process_username(&$variables) {
  * @see template_preprocess_username()
  * @see template_process_username()
  */
-function theme_username($object) {
+function theme_username($variables) {
+  $object = $variables['object'];
   if (isset($object->link_path)) {
     // We have a link path, so we should generate a link using l().
     // Additional classes may be added as array elements like
@@ -1971,11 +1987,11 @@ function theme_username($object) {
  * @return
  *   A themed HTML string representing the progress bar.
  */
-function theme_progress_bar($percent, $message) {
+function theme_progress_bar($variables) {
   $output = '<div id="progress" class="progress">';
-  $output .= '<div class="bar"><div class="filled" style="width: ' . $percent . '%"></div></div>';
-  $output .= '<div class="percentage">' . $percent . '%</div>';
-  $output .= '<div class="message">' . $message . '</div>';
+  $output .= '<div class="bar"><div class="filled" style="width: ' . $variables['percent'] . '%"></div></div>';
+  $output .= '<div class="percentage">' . $variables['percent'] . '%</div>';
+  $output .= '<div class="message">' . $variables['message'] . '</div>';
   $output .= '</div>';
 
   return $output;
@@ -1989,9 +2005,9 @@ function theme_progress_bar($percent, $message) {
  * @return
  *   A string containing indentations.
  */
-function theme_indentation($size = 1) {
+function theme_indentation($variables) {
   $output = '';
-  for ($n = 0; $n < $size; $n++) {
+  for ($n = 0; $n < $variables['size']; $n++) {
     $output .= '<div class="indentation">&nbsp;</div>';
   }
   return $output;
@@ -2001,7 +2017,10 @@ function theme_indentation($size = 1) {
  * @} End of "defgroup themeable".
  */
 
-function _theme_table_cell($cell, $header = FALSE) {
+function _theme_table_cell($variables) {
+  extract($variables, EXTR_SKIP);
+  // $cell, $header = FALSE
+  // @todo remove extract() if possible and check hook_theme defaults.
   $attributes = '';
 
   if (is_array($cell)) {
