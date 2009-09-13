@@ -275,7 +275,11 @@ function pager_get_querystring() {
  *
  * @ingroup themeable
  */
-function theme_pager($tags = array(), $element = 0, $parameters = array(), $quantity = 9) {
+function theme_pager($variables) {
+  extract($variables, EXTR_SKIP);
+  // $tags = array(), $element = 0, $parameters = array(), $quantity = 9
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   global $pager_page_array, $pager_total;
 
   // Calculate various markers within this pager piece:
@@ -399,7 +403,11 @@ function theme_pager($tags = array(), $element = 0, $parameters = array(), $quan
  *
  * @ingroup themeable
  */
-function theme_pager_first($text, $element = 0, $parameters = array()) {
+function theme_pager_first($variables) {
+  extract($variables, EXTR_SKIP);
+  // $text, $element = 0, $parameters = array()
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   global $pager_page_array;
   $output = '';
 
@@ -427,7 +435,11 @@ function theme_pager_first($text, $element = 0, $parameters = array()) {
  *
  * @ingroup themeable
  */
-function theme_pager_previous($text, $element = 0, $interval = 1, $parameters = array()) {
+function theme_pager_previous($variables) {
+  extract($variables, EXTR_SKIP);
+  // $text, $element = 0, $interval = 1, $parameters = array()
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   global $pager_page_array;
   $output = '';
 
@@ -464,7 +476,11 @@ function theme_pager_previous($text, $element = 0, $interval = 1, $parameters = 
  *
  * @ingroup themeable
  */
-function theme_pager_next($text, $element = 0, $interval = 1, $parameters = array()) {
+function theme_pager_next($variables) {
+  extract($variables, EXTR_SKIP);
+  // $text, $element = 0, $interval = 1, $parameters = array()
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   global $pager_page_array, $pager_total;
   $output = '';
 
@@ -498,7 +514,11 @@ function theme_pager_next($text, $element = 0, $interval = 1, $parameters = arra
  *
  * @ingroup themeable
  */
-function theme_pager_last($text, $element = 0, $parameters = array()) {
+function theme_pager_last($variables) {
+  extract($variables, EXTR_SKIP);
+  // $text, $element = 0, $parameters = array()
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   global $pager_page_array, $pager_total;
   $output = '';
 
@@ -527,7 +547,11 @@ function theme_pager_last($text, $element = 0, $parameters = array()) {
  *
  * @ingroup themeable
  */
-function theme_pager_link($text, $page_new, $element, $parameters = array(), $attributes = array()) {
+function theme_pager_link($variables) {
+  extract($variables, EXTR_SKIP);
+  // $text, $page_new, $element, $parameters = array(), $attributes = array()
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $page = isset($_GET['page']) ? $_GET['page'] : '';
   if ($new_page = implode(',', pager_load_array($page_new[$element], $element, explode(',', $page)))) {
     $parameters['page'] = $new_page;

@@ -787,10 +787,7 @@ function hook_field_formatter_info_alter(&$info) {
  *   - #formatter: The name of the formatter being used.
  *   - #settings: The array of formatter settings.
  */
-function theme_field_formatter_FORMATTER_SINGLE($variables) {
-  extract($variables, EXTR_SKIP);
-  // @todo remove extract() if possible and check hook_theme defaults.
-
+function theme_field_formatter_FORMATTER_SINGLE($element) {
   // This relies on a 'safe' element being prepared in hook_field_sanitize().
   return $element['#item']['safe'];
 }
