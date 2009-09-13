@@ -1271,8 +1271,8 @@ function theme_menu_item_link($link) {
  *
  * @ingroup themeable
  */
-function theme_menu_tree($tree) {
-  return '<ul class="menu">' . $tree . '</ul>';
+function theme_menu_tree($variables) {
+  return '<ul class="menu">' . $variables['tree'] . '</ul>';
 }
 
 /**
@@ -1299,7 +1299,10 @@ function theme_menu_tree($tree) {
  *   Extra classes that should be added to the class of the list item.
  *   Defaults to NULL.
  */
-function theme_menu_item($link, $has_children, $menu = '', $in_active_trail = FALSE, $extra_class = NULL) {
+function theme_menu_item($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   $class = ($menu ? 'expanded' : ($has_children ? 'collapsed' : 'leaf'));
   if (!empty($extra_class)) {
     $class .= ' ' . $extra_class;
@@ -1315,7 +1318,10 @@ function theme_menu_item($link, $has_children, $menu = '', $in_active_trail = FA
  *
  * @ingroup themeable
  */
-function theme_menu_local_task($link, $active = FALSE) {
+function theme_menu_local_task($variables) {
+  extract($variables, EXTR_SKIP);
+  // @todo remove extract() if possible and check hook_theme defaults.
+
   return '<li ' . ($active ? 'class="active" ' : '') . '>' . $link . "</li>\n";
 }
 
@@ -1324,8 +1330,8 @@ function theme_menu_local_task($link, $active = FALSE) {
  *
  * @ingroup themeable
  */
-function theme_menu_local_action($link) {
-  return '<li>' . $link . "</li>\n";
+function theme_menu_local_action($variables) {
+  return '<li>' . $variables['link'] . "</li>\n";
 }
 
 /**
